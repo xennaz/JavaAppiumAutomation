@@ -130,8 +130,48 @@ public class HomeWork {
                 "Cannot find text element 'Search wikipedia'",
                 5
                         );
+    }
 
+    @Test
 
+    public void checkWordPresenceInSearchResult(){
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find Skip button",
+                5
+
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find 'Search Wikipedia' input2",
+                5
+        );
+
+        assertElementContainsText(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Java']"),
+                "Word has not found in search result title 1",
+                "Java",
+                5
+        );
+        assertElementContainsText(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Java (programming language)']"),
+                "Word has not found in search result title 2",
+                "Java",
+                5
+        );
+        assertElementContainsText(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='JavaScript']"),
+                "Word has not found in search result title 3",
+                "Java",
+                5
+        );
 
     }
 
@@ -171,6 +211,15 @@ public class HomeWork {
         WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
         element.sendKeys(value);
         return element;
+    }
+
+    private void assertElementContainsText(By by, String error_message, String search_word, long timeOutInSeconds){
+        WebElement element = waitForElementPresent(by, error_message,timeOutInSeconds );
+        String element_text = element.getAttribute("text");
+                Assert.assertTrue(error_message, element_text.contains(search_word));
+
+
+
     }
 
 
