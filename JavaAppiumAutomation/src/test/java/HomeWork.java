@@ -77,6 +77,64 @@ public class HomeWork {
 
     }
 
+    @Test
+
+    public void searchCancel(){
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
+                "Cannot find Skip button",
+                5
+
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find 'Search Wikipedia' input2",
+                5
+        );
+
+        assertElementHasText(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Island in Indonesia']"),
+                "Island in Indonesia",
+                "Cannot find text element article 1",
+                10
+                       );
+        assertElementHasText(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
+                "Object-oriented programming language",
+                "Cannot find text element article 22",
+                10
+        );
+        assertElementHasText(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='High-level programming language']"),
+                "High-level programming language",
+                "Cannot find text element article 3 3",
+                10
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot find 'close_btn'",
+                5
+        );
+
+        assertElementHasText(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Search Wikipedia",
+                "Cannot find text element 'Search wikipedia'",
+                5
+                        );
+
+
+
+    }
+
 
     private WebElement waitForElementPresent(By by, String error_message, long timeOutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
@@ -108,6 +166,15 @@ public class HomeWork {
         );
 
     }
+
+    private WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeOutInSeconds) {
+        WebElement element = waitForElementPresent(by, error_message, timeOutInSeconds);
+        element.sendKeys(value);
+        return element;
+    }
+
+
+
 
 
 
